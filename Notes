@@ -1,0 +1,24 @@
+URLS
+-----
+- Hackers can add URLs to their dodgy resource in the quert params.
+- PHP will accept an array from query params.
+- returning a 404 instead of a 403 will hide the existence of resources from unauthorised users.
+
+
+
+
+
+
+
+
+Checklist
+----------
+- Make sure dev mode isn't running in prod. APP_DEBUG, APP_ENV (change from local)
+- Make sure they can't access telescope. What about the 403 page that it presents when it is not in local mode?
+- Change the generic validation messages? this could allow them to figure out you are using laravel.
+- Make sure to put gates on the seeing the form as well as being able to submit a request via the form.
+- Use policies where necessary
+
+Useful Commands
+----------------
+- php artisan make:policy --model=Book BookPolicy - create a policy for a specific model.

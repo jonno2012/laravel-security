@@ -12,6 +12,9 @@ class Book extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'description'];
+    protected $hidden = ['key']; // will never be sent to the browser.
+
     public function escapedDescription(): Attribute
     {
         return Attribute::get(fn () => new HtmlString(nl2br(e($this->description))));

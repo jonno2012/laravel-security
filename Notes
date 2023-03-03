@@ -23,7 +23,8 @@ legitimate markdown but obviously we know that it isn't. So  how do we removed m
 legitimate markdown. It is up to the dev to ensure that this is not possible. League\CommonMark is a package that allows
 us more granular control over what is allowed.
 - An HTML 'purifier' or 'sanitizer' will allow you to specifiy exactly what tags are allowed or not.
-
+- In a traditional web app only the data you want the user to see is passed to the browser but in api/spa based apps it
+is not uncommon to see whole data objects sent to the browser with little  effort to remove the data which isn't being used.
 Checklist
 ----------
 - Make sure dev mode isn't running in prod. APP_DEBUG, APP_ENV (change from local)
@@ -49,6 +50,8 @@ Str::markdown("<img src='#' onmouseover='alert(\"Boom!\")'>", ['html_input' => '
 Str::markdown("<img src='#' onmouseover='alert(\"Boom!\")'>", ['html_input' => 'strip']); OR
 Str::markdown("<img src='#' onmouseover='alert(\"Boom!\")'>", ['html_input' => 'strip', 'allow_unsafe_links' => false]);
 See laravel docs.
+- Are you using Resource classes to specifiy what should be returned to the API?
+
 Useful Commands
 ----------------
 - php artisan make:policy --model=Book BookPolicy - create a policy for a specific model.

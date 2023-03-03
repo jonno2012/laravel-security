@@ -3,8 +3,10 @@ URLS
 - Hackers can add URLs to their dodgy resource in the quert params.
 - PHP will accept an array from query params.
 - returning a 404 instead of a 403 will hide the existence of resources from unauthorised users.
-
-
+- hackers will try and change the field name of forms to, for example, 'admin', where they would set it to '1'.
+- validation over 'fillable' can be preferable because the lack of flexibility of using $fillable can lead devs to
+allow the inclusion of all fields in input where those excess  fields are not even required. For example it may be an 'admin'
+field which gives a user elevated privileges.
 
 
 
@@ -18,6 +20,12 @@ Checklist
 - Change the generic validation messages? this could allow them to figure out you are using laravel.
 - Make sure to put gates on the seeing the form as well as being able to submit a request via the form.
 - Use policies where necessary
+- Make sure attributes in $fillable aren't being allowed in input where they are not needed and where the validation
+is being handled by $fillable attribute as opposed to explicit validation on the request level.
+- Ensure that anything in $fillable isn't being included in input.
+- Filter data using validation rules. See UserController > store
+- consider using the Rules\Password::default() or define your own rules in the AuthServiceProvider
+- consider using the ->unCompromised() validation rule.
 
 Useful Commands
 ----------------

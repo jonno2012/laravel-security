@@ -17,8 +17,12 @@ input hasn't been handled properly
 - A reflected js attack is where the malicious code is added to the url in the browser and which is then ran by the browser.
 - Stored XSS is where the injected code is stored in the DB and then will not execute until it is retrieved and generated
 on the page.
-
-
+- 'Markdown' input is input where users are allowed to enter their own html onto the page.
+- <img src="#" onmouseover="alert('Boom')"> - an example of how this can be exploited. This in theory could be perfectly
+legitimate markdown but obviously we know that it isn't. So  how do we removed malicious markdown whilst keeping the
+legitimate markdown. It is up to the dev to ensure that this is not possible. League\CommonMark is a package that allows
+us more granular control over what is allowed.
+- An HTML 'purifier' or 'sanitizer' will allow you to specifiy exactly what tags are allowed or not.
 
 Checklist
 ----------
@@ -39,7 +43,12 @@ placeholder queries etc.
 - You should almost always escape form input values with value="{{ request('search') }}" i.e. turn the sensitive characters into html entities.
 - <div>{!! nl2br(e($book->description)) !!}</div> - can be used to remove \n\r whilst escaping input. Put in an attribute on
 the model to avoid having to include this everywhere.
-
+- Ensure all markdown is handled properly. See League\CommonMark
+- In actual fact in Laravel we can do thus:
+Str::markdown("<img src='#' onmouseover='alert(\"Boom!\")'>", ['html_input' => 'escape']); OR
+Str::markdown("<img src='#' onmouseover='alert(\"Boom!\")'>", ['html_input' => 'strip']); OR
+Str::markdown("<img src='#' onmouseover='alert(\"Boom!\")'>", ['html_input' => 'strip', 'allow_unsafe_links' => false]);
+See laravel docs.
 Useful Commands
 ----------------
 - php artisan make:policy --model=Book BookPolicy - create a policy for a specific model.

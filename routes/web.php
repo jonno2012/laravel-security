@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +16,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/sql_example', function(Request $request) {
+    $books = \App\Models\Book::query()
+        ->when($request->get('search'), fn($q, $s) => $q->whereRaw("slug LIKE ?", ["%{$s}%"]))
+        ->whereNotNull('published_at')
+        ->oldest()
+        ->get(); // paramaterised queries
+
+    return view('welcome', ['books' => $books]);
 });
 
 Route::get('/dashboard', function () {

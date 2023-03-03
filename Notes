@@ -7,7 +7,11 @@ URLS
 - validation over 'fillable' can be preferable because the lack of flexibility of using $fillable can lead devs to
 allow the inclusion of all fields in input where those excess  fields are not even required. For example it may be an 'admin'
 field which gives a user elevated privileges.
-
+- AUtomation tools like sqlmap can be used to send requests to a form route to scan for sql vulnerability exploits. It can
+get a list of DBs and vulnerable queries. It can, amongst other things, obtain the characters of a result set by analysing
+how long each character takes to get because each character takes a know length of time to be returned. It can find the
+tables, columns on each table etc. The hackers can get around rate limiting and scanners by randomising the schedule of
+the scan requests.
 
 
 
@@ -26,6 +30,9 @@ is being handled by $fillable attribute as opposed to explicit validation on the
 - Filter data using validation rules. See UserController > store
 - consider using the Rules\Password::default() or define your own rules in the AuthServiceProvider
 - consider using the ->unCompromised() validation rule.
+- Be very careful when using 'raw' queries as they rely on your own query building and will not sanitize. Always use
+placeholder queries etc.
+- Make sure entering bogus input doesn't throw an error.
 
 Useful Commands
 ----------------

@@ -12,8 +12,11 @@ get a list of DBs and vulnerable queries. It can, amongst other things, obtain t
 how long each character takes to get because each character takes a know length of time to be returned. It can find the
 tables, columns on each table etc. The hackers can get around rate limiting and scanners by randomising the schedule of
 the scan requests.
-
-
+- Entering "><script>alert("Boom!")</script> will output Boom!, if the form attribute delimiter is " and if the
+input hasn't been handled properly
+- A reflected js attack is where the malicious code is added to the url in the browser and which is then ran by the browser.
+- Stored XSS is where the injected code is stored in the DB and then will not execute until it is retrieved and generated
+on the page.
 
 
 
@@ -33,6 +36,9 @@ is being handled by $fillable attribute as opposed to explicit validation on the
 - Be very careful when using 'raw' queries as they rely on your own query building and will not sanitize. Always use
 placeholder queries etc.
 - Make sure entering bogus input doesn't throw an error.
+- You should almost always escape form input values with value="{{ request('search') }}" i.e. turn the sensitive characters into html entities.
+- <div>{!! nl2br(e($book->description)) !!}</div> - can be used to remove \n\r whilst escaping input. Put in an attribute on
+the model to avoid having to include this everywhere.
 
 Useful Commands
 ----------------

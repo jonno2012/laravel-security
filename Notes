@@ -7,7 +7,7 @@ URLS
 - validation over 'fillable' can be preferable because the lack of flexibility of using $fillable can lead devs to
 allow the inclusion of all fields in input where those excess  fields are not even required. For example it may be an 'admin'
 field which gives a user elevated privileges.
-- AUtomation tools like sqlmap can be used to send requests to a form route to scan for sql vulnerability exploits. It can
+- Automation tools like sqlmap can be used to send requests to a form route to scan for sql vulnerability exploits. It can
 get a list of DBs and vulnerable queries. It can, amongst other things, obtain the characters of a result set by analysing
 how long each character takes to get because each character takes a know length of time to be returned. It can find the
 tables, columns on each table etc. The hackers can get around rate limiting and scanners by randomising the schedule of
@@ -22,7 +22,7 @@ on the page.
 legitimate markdown but obviously we know that it isn't. So  how do we removed malicious markdown whilst keeping the
 legitimate markdown. It is up to the dev to ensure that this is not possible. League\CommonMark is a package that allows
 us more granular control over what is allowed.
-- An HTML 'purifier' or 'sanitizer' will allow you to specifiy exactly what tags are allowed or not.
+- An HTML 'purifier' or 'sanitizer' will allow you to specify exactly what tags are allowed or not.
 - In a traditional web app only the data you want the user to see is passed to the browser but in api/spa based apps it
 is not uncommon to see whole data objects sent to the browser with little  effort to remove the data which isn't being used.
 - There are scripts that are used to try brute force attacks to break passwords. Rate Limiting is critical in order to
@@ -30,7 +30,8 @@ prevent these kinds of attacks.
 - Rate limiting often works by using the ip address of the attacker. Bots can be used to make requests using any number
 of different IPs. He recommends removing the ip address from the rate limits altogether.
 - It is possible to set rate limiting middleware meaning you can set it on anything. There is existing middleware to do this.
-
+- 'Signed routes' can be used to give temp perms for a user to view a page or whatever, if they are accessing the page
+using a signed link.
 
 Checklist
 ----------

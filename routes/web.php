@@ -38,4 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/books/{book}/preview', [\App\Http\Controllers\PreviewBookController::class])
+    ->name('books.preview')
+    ->middleware('signed'); // tells laravel to use the signedRoute middleware.
+
 require __DIR__.'/auth.php';

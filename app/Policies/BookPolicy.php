@@ -19,9 +19,13 @@ class BookPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Book $book): bool
+    public function view(User $user, Book $book)
     {
-        //
+        // if book is published anyine can view. If not, pass to the update
+        // method to see if user has update perms
+        return $book->published_at
+            ? Response::allow()
+            : $this->update($user, $book);
     }
 
     /**

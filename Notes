@@ -32,6 +32,17 @@ of different IPs. He recommends removing the ip address from the rate limits alt
 - It is possible to set rate limiting middleware meaning you can set it on anything. There is existing middleware to do this.
 - 'Signed routes' can be used to give temp perms for a user to view a page or whatever, if they are accessing the page
 using a signed link.
+- Type juggling is where php turns numeric strings to integers etc and where it loosely evaluates using ==.
+- 10 == "10hello" will evaluate to true (in PHP 7.4). It is possible to guess the first numeric portion of a hash by cycling through
+until the comparison evaluates to true. Also it is possible to manipulate comparisons by taking advantage of the fact that
+0 == 'anything' is true and that 0 == '' is true etc. In PHP 8.1 10 == "10hello" will evaluate to false. However in 8,
+PHP will still evaluate true and false on falsey values. Using strict comparisons (===) will fix this issue.
+- When comparing values, PHP will take a consistent amount of time to measure the lengths of values. A value with one
+character will take the same amount of time to compare and a vale with 10 characters will take a consistent amount of time etc.
+Hackers can measure the amount of time a comparison takes to guage how many of the characters of the values have been matched
+until eventually it has matched the whole value. So by making a large volume of requests a hacker can potentially find
+the value of a value in this way. hash_equals() normalises the amount of time it takes to return a comparison result.
+
 
 Checklist
 ----------
@@ -58,10 +69,11 @@ Str::markdown("<img src='#' onmouseover='alert(\"Boom!\")'>", ['html_input' => '
 Str::markdown("<img src='#' onmouseover='alert(\"Boom!\")'>", ['html_input' => 'strip']); OR
 Str::markdown("<img src='#' onmouseover='alert(\"Boom!\")'>", ['html_input' => 'strip', 'allow_unsafe_links' => false]);
 See laravel docs.
-- Are you using Resource classes to specifiy what should be returned to the API?
+- Are you using Resource classes to specify what should be returned to the API?
 - Always use Rate Limiting for password requests etc.
 - Remove IP from the rate limiter. See code.
-
+- Use strict comparisons by default.
+- Use has_equals() to compare hashes.
 
 Useful Commands
 ----------------

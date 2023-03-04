@@ -42,4 +42,14 @@ Route::get('/books/{book}/preview', [\App\Http\Controllers\PreviewBookController
     ->name('books.preview')
     ->middleware('signed'); // tells laravel to use the signedRoute middleware.
 
+Route::get('/book/{hash}/crack_my_hash', function(Request $request) {
+    $key = 'sdfsdf';
+    $value = 'ssdfsdfsdf';
+    if (hash_equals($request->key, $key)) { // we use hash_equals to compare hashes to prevent time based hash comparison
+        // hack attempts. See notes.
+        return "Passed: {$value} === \"{$key}\"\n";
+    }
+    return "Failed: {$value} === \"{$key}\"\n";
+});
+
 require __DIR__.'/auth.php';
